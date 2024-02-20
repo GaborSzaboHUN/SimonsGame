@@ -1,13 +1,26 @@
+
 let gamePattern = []
 const buttonColors = ['red', 'blue', 'green', 'yellow']
 
 const nextSequence = () => {
     return Math.floor(Math.random() * 4)
 }
-
+// ez többször lefut ezért hibásan menti a 'gamePattern'-be a színeket, valszeg egy függvényen belül kekkene lekezelni az animációt és a hangokat
 const randomChosenColor = () => {
     gamePattern.push(buttonColors[nextSequence()])
     return (buttonColors[nextSequence()])
+}
+
+const chosenColorAnimation = () => {
+    const button = $(`#${randomChosenColor()}`)
+    button.fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100)
+}
+
+// - - - - - - - - User click pattern
+let userClickedPattern = []
+
+const userChosenColor = (buttonColor) => {
+    userClickedPattern.push(buttonColor)
 }
 
 // - - - - - - - - Button click event listener 
@@ -18,6 +31,7 @@ buttons.click((e) => {
     const buttonId = e.target.id
     handleClick(buttonId)
     clickAnimation($(e.target))
+    userChosenColor(buttonId)
 })
 
 // - - - - - - - - Button click animation 
