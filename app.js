@@ -1,6 +1,7 @@
 
 let gamePattern = []
 const buttonColors = ['red', 'blue', 'green', 'yellow']
+let level = 0
 
 const nextSequence = () => {
 
@@ -14,6 +15,12 @@ const nextSequence = () => {
     $(`#${randomChosenColor}`).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100)
     const audio = new Audio(`sounds/${randomChosenColor}.mp3`)
     audio.play()
+
+
+    // - - - - - - - - Increase level number
+
+    $('#level-title').text(`Level ${++level}`)
+
 }
 
 
@@ -23,6 +30,13 @@ let userClickedPattern = []
 
 const userChosenColor = (buttonColor) => {
     userClickedPattern.push(buttonColor)
+}
+
+
+// - - - - - - - - Check Answer
+
+const checkAnswer = () => {
+    userClickedPattern[userClickedPattern.length - 1] === gamePattern[gamePattern.length - 1] ? "király" : 'beszoptad'
 }
 
 
@@ -38,6 +52,7 @@ buttons.click((e) => {
 
     clickAnimation($(e.target))
     userChosenColor(buttonId)
+    checkAnswer()
 })
 
 
@@ -50,3 +65,12 @@ const clickAnimation = (button) => {
         button.removeClass('pressed')
     }, 200);
 }
+
+
+// - - - - - - - - Game start keydown
+
+$(document).keypress((e) => {
+    $('#level-title').text() === 'Press A Key to Start' ? nextSequence() : ''
+
+    $('#level-title').text(`Level ${level}`)
+});
